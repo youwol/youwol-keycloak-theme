@@ -1,0 +1,31 @@
+.brand {
+  height: 35px;
+}
+
+.delete-button {
+  width: 150px;
+  height: 50px;
+}
+
+@media (max-width: 320px) {
+  .delete-button {
+    width: 120px;
+    height: 50px;
+  }
+
+}
+:root {
+  --pf-global--primary-color--100: #f0ab00;
+  --pf-global--primary-color--200: rgba(240, 136, 0, 0.91);
+}
+
+.pf-c-form-control {
+  --pf-global--primary-color--100: #f0ab00;
+}
+
+.pf-c-button {
+  --pf-c-button--m-primary--BackgroundColor: #f0ab00;
+  --pf-c-button--m-secondary--BorderColor: #f0ab00;
+  --pf-c-button--m-secondary--Color: #f0ab00;
+  --pf-c-button--m-primary--hover--BackgroundColor: rgba(240, 136, 0, 0.91);
+}

@@ -1,0 +1,18 @@
+:root {
+    --pf-global--primary-color--100: #f0ab00;
+    --pf-global--primary-color--200: rgba(240, 136, 0, 0.91);
+}
+
+.pf-c-form-control {
+    --pf-global--primary-color--100: #f0ab00;
+}
+
+.pf-c-button {
+    --pf-c-button--m-primary--hover--BackgroundColor: #f0ab00;
+}
+
+#kc-header-wrapper {
+    font-size: 0;
+    background: url("../img/logo_youwol.png") no-repeat center;
+
+}

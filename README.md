@@ -24,6 +24,7 @@ Simply run from this repository directory
 ```shell
 docker build -t youwol-keycloak-theme:0.1.0
 docker tag youwol-keycloak-theme:0.1.0 registry.gitlab.com/youwol/platform/youwol-keycloak-theme:0.1.0
+docker push registry.gitlab.com/youwol/platform/youwol-keycloak-theme:0.1.0
 ```
 
 
@@ -125,7 +126,7 @@ To facilitate customization, reduce maintenance, and limit security risks:
 * messages should not be modified (no messages defined in customized theme)
 * JS & HTML templates should not be modified (except for welcome theme)
 
-Fer reference, the builtin themes are committed in this repository under the directory `./builtins/<keycloak version>/`
+For reference, the builtin themes are committed in this repository under the directory `./builtins/<keycloak version>/`
 
 
 ### Customizable aspects of Keycloak
@@ -189,4 +190,4 @@ docker stop kc_container
 cd $WORKDIR
 unzip org.keycloak.keycloak-themes-19.0.3.jar
 mv $WORKDIR/theme/* $TARGET_DIR
-```_
+```

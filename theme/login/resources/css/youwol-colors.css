@@ -1,18 +1,69 @@
 :root {
-    --pf-global--primary-color--100: #f0ab00;
-    --pf-global--primary-color--200: rgba(240, 136, 0, 0.91);
+  --pf-global--primary-color--100: #f0ab00;
+  --pf-global--primary-color--200: rgba(240, 136, 0, 0.91);
+  --yw-box-shadow: rgb(0 0 0 / 50%) 0 3px 6px 0px;
+  --yw-btn-radius: 10px;
+  --yw-logo-black: url("../img/logo_YouWol_name_black.svg") no-repeat center;
+  --yw-logo-white: url("../img/logo_YouWol_name_white.svg") no-repeat center;
 }
 
 .pf-c-form-control {
-    --pf-global--primary-color--100: #f0ab00;
+  --pf-global--primary-color--100: #f0ab00;
 }
 
 .pf-c-button {
-    --pf-c-button--m-primary--hover--BackgroundColor: #f0ab00;
+  --pf-c-button--m-primary--hover--BackgroundColor: #f0ab00;
+  border-radius: var(--yw-btn-radius);
 }
 
 #kc-header-wrapper {
-    font-size: 0;
-    background: url("../img/logo_youwol.png") no-repeat center;
+  font-size: 0;
+  background: url("../img/logo_youwol.png") no-repeat center;
+  background: var(--yw-logo-white);
+  filter: drop-shadow(2px 2px 4px black);
+}
 
+#kc-login {
+  box-shadow: var(--yw-box-shadow);
+}
+
+.card-pf {
+  border-radius: var(--yw-btn-radius) !important;
+  box-shadow: var(--yw-box-shadow);
+}
+
+.login-pf-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* comment this part to show the logo */
+/* remove the logo for login form */
+/*#kc-header{*/
+/*    display: none;*/
+/*}*/
+.form-group.login-pf-settings div span a {
+  color: var(--pf-global--primary-color--200);
+}
+
+.checkbox:checked:before {
+  background-color: green;
+}
+
+/* Responsive to mobile */
+@media (max-width: 767px) {
+  .login-pf body {
+    background: url(../img/background.png) no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+  }
+
+  #kc-header-wrapper {
+    height: 40px;
+    background: var(--yw-logo-white);
+  }
 }

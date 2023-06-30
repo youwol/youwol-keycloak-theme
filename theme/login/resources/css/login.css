@@ -3,6 +3,7 @@
    Therefore the Patternfly background must be set to none. */
 .login-pf {
     background: none;
+    /*background: red;*/
 }
 
 .login-pf body {
@@ -294,6 +295,7 @@ div.kc-logo-text {
     font-size: 13px;
     padding: 15px 35px;
     background-color: #F0F0F0;
+    border-radius: var(--yw-btn-radius)
 }
 
 #kc-form-options span {
@@ -660,7 +662,8 @@ ul#kc-totp-supported-apps {
         margin-right: 0;
         padding-top: 0;
         border-top: 0;
-        box-shadow: 0 0;
+        box-shadow: 0px 0px 4px 0px;
+        border-top: solid 4px var(--pf-global--primary-color--100);
     }
 
     .kc-social-grid {

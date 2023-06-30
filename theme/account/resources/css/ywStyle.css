@@ -1,0 +1,17 @@
+:root {
+  --pf-global--primary-color--100: #f0ab00;
+  --pf-global--primary-color--200: rgba(240, 136, 0, 0.91);
+  --yw-box-shadow: rgb(0 0 0 / 50%) 0 3px 6px 0px;
+  --yw-btn-radius: 10px;
+}
+
+#landingSignOutButton,
+#signOutButton {
+  background-color: rgba(241, 50, 50, 0.65);
+  color: #e9fffd;
+}
+
+.pf-c-page__header-tools a,
+.pf-c-page__main-body a {
+  color: #f08800e8 !important;
+}

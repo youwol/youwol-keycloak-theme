@@ -2,7 +2,6 @@
 
 Keycloak theme for Youwol cluster.
 
-- [Publish Youwol theme docker image](#publish-youwol-theme-docker-image)
 - [Deploy Keycloak with Youwol theme](#deploy-keycloak-with-youwol-theme)
 - [Use a specific theme](#use-a-specific-theme)
 - [Development](#development)
@@ -15,58 +14,16 @@ Keycloak theme for Youwol cluster.
         + [Email theme](#email-theme)
     * [Extract the builtin themes](#extract-the-builtin-themes)
 
-## Publish Youwol theme docker image
-
-*NB: building docker image is only needed for publishing, development can be done by directly editing the `./theme`
-directory when this directory is mounted in a Keycloak container. See [below](#run-keycloak-docker-image-for-development).*
-
-Simply run from this repository directory
-```shell
-docker build -t youwol-keycloak-theme:0.1.0
-docker tag youwol-keycloak-theme:0.1.0 registry.gitlab.com/youwol/platform/youwol-keycloak-theme:0.1.0
-docker push registry.gitlab.com/youwol/platform/youwol-keycloak-theme:0.1.0
-```
-
-
 ## Deploy Keycloak with Youwol theme
 
-This repository docker image will be used as an init container in kubernetes PodTemplate,
-simply copying contents of its directory `./theme/` into a shared volume mounted into Keycloak container under 
-`/opt/keycloak/themes/youwol` :
-```yaml
-      spec:
-        initContainers:
-          - name: deploy-youwol-keycloak-theme
-            image: youwol-keycloak-theme:0.0.1
-            command:
-              - sh
-            args:
-              - -c
-              - |
-                echo "Copying theme …"
-                cp -R /theme/* /target
-            volumeMounts:
-              - name: youwol-keycloak-theme
-                mountPath: /target
-        containers:
-          - volumeMounts:
-              - name: youwol-keycloak-theme
-                mountPath: /opt/keycloak/themes/youwol
-        volumes:
-          - name: youwol-keycloak-theme
-            emptyDir: {}
-```
-
+See [k8s-deployments/infra/keycloak](https://github.com/youwol/k8s-deployments/blob/nevado-tres-cruces/infra/keycloak/README.md)
 
 ## Use a specific theme
-
 
 Except for the [`welcome` theme](#welcome-theme) (defined at startup with the option `spi-theme-welcome-theme`),
 these different types are configured for each realm:
 
 `(welcome page) Administration Console => (left menu) Realm settings => (tab) Themes`
-
-
 
 ## Development
 
@@ -75,6 +32,7 @@ Also see official documentation : https://www.keycloak.org/docs/19.0.3/server_de
 ### Run Keycloak docker image for development
 
 This will launch a keycloak 19.0.3 container, ready for themes development:
+
 * listen on port 8080 (i.e. access at http://localhost:8080/)
 * host directory `./theme/` mounted into `/opt/keycloak/themes/youwol`: will define theme `youwol` from host directory
 * env vars `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD`: initial account, for administration
@@ -95,13 +53,15 @@ docker run --rm --name kc_container \
   --spi-theme-welcome-theme=youwol
 ```
 
-Once the container is running, just create a new realm, add a new user to this realm, and [configure](#use-a-specific-theme)
+Once the container is running, just create a new realm, add a new user to this realm,
+and [configure](#use-a-specific-theme)
 this new realm and the `master` realm to used the `youwol` theme.
 
 ### Create a new theme and extend existing ones
 
 Each aspect of Keycloak can be customized independently, and a theme directory can provide one or more of these
 aspects by having any of the following subdirectories :
+
 - [welcome](#welcome-theme)
 - [login](#login-theme)
 - [account](#account-theme)
@@ -109,31 +69,36 @@ aspects by having any of the following subdirectories :
 - [email](#email-theme)
 
 Each of these directories define a theme using the following files:
-* `./*.ftl` : HTML templates (and text templates for [email](#email-theme)), using [Freemarker](https://freemarker.apache.org)
+
+* `./*.ftl` : HTML templates (and text templates for [email](#email-theme)),
+  using [Freemarker](https://freemarker.apache.org)
 * `./resources/` : Static resources (images, css, js, etc…)
-* `./messages/messages_<lang>.properties` : (localized) [Messages bundles](https://www.keycloak.org/docs/19.0.3/server_development/#messages)
+* `./messages/messages_<lang>.properties` : (
+  localized) [Messages bundles](https://www.keycloak.org/docs/19.0.3/server_development/#messages)
 * `./theme.properties` : [Theme properties](https://www.keycloak.org/docs/19.0.3/server_development/#theme-properties)
 
-Rather than defining all these elements, a custom theme can reuse an existing theme (i.e. a builtin theme) and only 
+Rather than defining all these elements, a custom theme can reuse an existing theme (i.e. a builtin theme) and only
 define some new elements (or override existing ones) by extending this existing theme:
+
 ```properties
 # In theme.properties
-parent=<existing theme>
+parent = <existing theme>
 ```
 
 To facilitate customization, reduce maintenance, and limit security risks:
+
 * new themes should extend builtin ones (i.e. `parent=<builtin>` in `./theme.properties`)
 * messages should not be modified (no messages defined in customized theme)
 * JS & HTML templates should not be modified (except for welcome theme)
 
 For reference, the builtin themes are committed in this repository under the directory `./builtins/<keycloak version>/`
 
-
 ### Customizable aspects of Keycloak
 
 #### Welcome theme
 
 For the (single) welcome page:
+
 * In production environnement : https://platform.youwol.com/auth/
 * Docker image : http://localhost:8080/
 
@@ -148,15 +113,16 @@ For security reason this theme should be based on a builtin theme and change res
 
 #### Account theme
 
-For account management. For security reason this theme should be based on a builtin theme and change restricted to 
+For account management. For security reason this theme should be based on a builtin theme and change restricted to
 css and image:
+
 * In production environment : https://platform.youwol.com/auth/realms/youwol/account/
 * Docker image : http://localhost:8080/realms/master/account/
-
 
 #### Admin Console theme
 
 For the administration of keycloak. For now there is no user facing pages, so no customization is necessary:
+
 * In production environment : http://platform.youwol.com/auth/admin/master/console
 * Docker image : http://localhost:8080/admin/master/console
 
@@ -164,10 +130,9 @@ For the administration of keycloak. For now there is no user facing pages, so no
 
 Template for sending email. The default theme should be enough.
 
-
 ### Extract the builtin themes
 
-Builtins themes are available in keycloak official image, packaged as a jar archive. Only the theme directory of 
+Builtins themes are available in keycloak official image, packaged as a jar archive. Only the theme directory of
 this archive is of interest.
 
 For instance, for keycloak 19.0.3 (assuming these command lines are run from repository)

@@ -135,11 +135,14 @@ Template for sending email. The default theme should be enough.
 Builtins themes are available in keycloak official image, packaged as a jar archive. Only the theme directory of
 this archive is of interest.
 
-For instance, for keycloak 19.0.3 (assuming these command lines are run from repository)
+For instance, for keycloak 22.0.1 (assuming these command lines are run from repository)
 
 ```shell
+KC_VERSION=22.0.1
+
 # Repository directory
-TARGET_DIR=$(pwd)/builtins/19.0.3
+ORIGINAL_DIR=$(pwd)
+TARGET_DIR=$(pwd)/builtins/$KC_VERSION
 mkdir -p $TARGET_DIR
 
 # Temp directory for archive decompression
@@ -147,12 +150,16 @@ WORKDIR=/tmp/kc_builtin_themes
 mkdir -p $WORKDIR
 
 # Run a keycloak container and extract JAR archive
-docker run --detach --rm --name kc_container quay.io/keycloak/keycloak:19.0.3 start-dev
-docker cp kc_container:/opt/keycloak/lib/lib/main/org.keycloak.keycloak-themes-19.0.3.jar $WORKDIR
+docker run --detach --rm --name kc_container quay.io/keycloak/keycloak:$KC_VERSION start-dev
+docker cp kc_container:/opt/keycloak/lib/lib/main/org.keycloak.keycloak-themes-$KC_VERSION.jar $WORKDIR
 docker stop kc_container
 
 # Decompress archive and copy themes directories
 cd $WORKDIR
-unzip org.keycloak.keycloak-themes-19.0.3.jar
+unzip org.keycloak.keycloak-themes-$KC_VERSION.jar
 mv $WORKDIR/theme/* $TARGET_DIR
+
+# cleaning
+cd $ORIGINAL_DIR
+rm -r $WORKDIR
 ```

@@ -31,7 +31,7 @@ Also see official documentation : https://www.keycloak.org/docs/19.0.3/server_de
 
 ### Run Keycloak docker image for development
 
-This will launch a keycloak 19.0.3 container, ready for themes development:
+This will launch a keycloak 22.0.1 container, ready for themes development:
 
 * listen on port 8080 (i.e. access at http://localhost:8080/)
 * host directory `./theme/` mounted into `/opt/keycloak/themes/youwol`: will define theme `youwol` from host directory
@@ -46,7 +46,7 @@ docker run --rm --name kc_container \
   -v $(pwd)/theme/:/opt/keycloak/themes/youwol \
   -e KEYCLOAK_ADMIN=admin \
   -e KEYCLOAK_ADMIN_PASSWORD=admin \
-  quay.io/keycloak/keycloak:19.0.3 start-dev \
+  quay.io/keycloak/keycloak:22.0.1 start-dev \
   --spi-theme-static-max-age=-1 \
   --spi-theme-cache-themes=false \
   --spi-theme-cache-templates=false
